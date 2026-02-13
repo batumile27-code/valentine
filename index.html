@@ -18,8 +18,8 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            background-size: 200% 200%;
+            animation: gradientShift 20s ease infinite;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,9 +29,8 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
+            0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         /* ===== FLOATING HEARTS ===== */
@@ -39,12 +38,13 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: rgba(255, 182, 193, 0.7);
+            background: rgba(255, 182, 193, 0.6);
             transform: rotate(45deg);
-            animation: floatHeart 10s infinite linear;
+            animation: floatHeart 12s infinite linear;
             opacity: 0;
             pointer-events: none;
             z-index: 1;
+            will-change: transform, opacity;
         }
 
         .heart:before, .heart:after {
@@ -71,10 +71,10 @@
                 transform: translateY(10vh) rotate(45deg) scale(0); 
                 opacity: 0; 
             }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
             100% { 
-                transform: translateY(-110vh) rotate(45deg) scale(1.2); 
+                transform: translateY(-110vh) rotate(45deg) scale(1); 
                 opacity: 0; 
             }
         }
@@ -82,18 +82,19 @@
         /* ===== MAIN CONTAINER ===== */
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             padding: 40px;
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.25);
             position: relative;
             z-index: 10;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(8px);
             border: 2px solid rgba(255, 255, 255, 0.5);
             width: 90%;
             max-width: 800px;
             animation: containerEntry 0.8s ease-out;
             transition: box-shadow 0.5s ease;
+            will-change: transform;
         }
 
         @keyframes containerEntry {
@@ -118,7 +119,7 @@
             font-size: 2.5rem;
             margin-bottom: 10px;
             font-weight: 700;
-            animation: shimmer 3s ease-in-out infinite;
+            animation: shimmer 4s ease-in-out infinite;
         }
 
         @keyframes shimmer {
@@ -180,9 +181,10 @@
             text-align: center;
             overflow: hidden;
             background: linear-gradient(135deg, #ff6b9d, #ff8fab, #ffc2d1);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(5px);
             box-shadow: 0 15px 40px rgba(255, 105, 135, 0.35);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform;
         }
 
         .reason-card:hover {
@@ -319,6 +321,8 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         button::before {
@@ -436,15 +440,17 @@
             pointer-events: none; 
             animation: confetti-fall 4s linear forwards;
             font-size: 20px;
+            will-change: transform, opacity;
+            transform: translateZ(0);
         }
 
         @keyframes confetti-fall {
             0% {
-                transform: translateY(-10vh) rotate(0deg) scale(1);
+                transform: translateY(-10vh) rotate(0deg) scale(1) translateZ(0);
                 opacity: 1;
             }
             100% {
-                transform: translateY(110vh) rotate(720deg) scale(0.5);
+                transform: translateY(110vh) rotate(720deg) scale(0.5) translateZ(0);
                 opacity: 0;
             }
         }
@@ -554,7 +560,7 @@
 
     <!-- Generate Floating Hearts -->
     <script>
-        for(let i = 0; i < 40; i++) {
+        for(let i = 0; i < 15; i++) {
             let heart = document.createElement('div');
             heart.className = 'heart';
             heart.style.left = Math.random() * 100 + 'vw';
@@ -739,7 +745,7 @@
         // ===== CONFETTI EFFECT =====
         function createConfetti() {
             const heartEmojis = ['❤️', '💖', '💕', '💗', '💓', '💝', '💘'];
-            for (let i = 0; i < 120; i++) {
+            for (let i = 0; i < 80; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
